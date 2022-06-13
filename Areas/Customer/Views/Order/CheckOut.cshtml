@@ -1,0 +1,116 @@
+﻿@using EcommercialWebApplication.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model EcommercialWebApplication.Models.Order
+@{
+    ViewData["Title"] = "Order Details";
+}
+@{
+
+    List<Product> products = HttpContextAccessor.HttpContext.Session.Get<List<Product>>("products");
+   
+    if (products == null)
+    {
+        products=new List<Product>();
+    }
+
+}
+
+@{
+    ViewData["Title"] = "CheckOut";
+}
+
+<h1>CheckOut</h1>
+
+
+<br />
+
+<h2 class="text-info">Order Details</h2>
+<form asp-action="CheckOut" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <div class="col-6">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ShipName"></label>
+                </div>
+                <div class="col-8">
+                    <input type="hidden" asp-for="Id" />
+                    <input asp-for="ShipName" class="form-control" />
+                    <span asp-validation-for="ShipName" class="text-danger"></span>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ShipPhoneNumber"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ShipPhoneNumber" class="form-control" />
+                    <span asp-validation-for="ShipPhoneNumber" class="text-danger"></span>
+                </div>
+               
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ShipAddress"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ShipAddress" class="form-control" />
+                    <span asp-validation-for="ShipAddress" class="text-danger"></span>
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ShipEmail"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ShipEmail" class="form-control" />
+                    <span asp-validation-for="ShipEmail" class="text-danger"></span>
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="col-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in products)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/@item.Image" height="100px" width="150px"/>
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <div class="text-right">
+                <h3>Total Price : @products.Sum(c=>c.Price)</h3>
+            </div>
+            <div class="form-group text-right">
+                <input type="submit" value="Place Order" class="btn btn-success"/>
+            </div>
+        </div>
+       
+
+    </div>
+</form>
+@section Scripts{
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

@@ -1,0 +1,28 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+.categories_list {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.category_card:hover {
+    cursor:pointer;
+    box-shadow: 6px 9px 5px 0px rgba(0,0,0,0.49);
+    -webkit-box-shadow: 6px 9px 5px 0px rgba(0,0,0,0.49);
+    -moz-box-shadow: 6px 9px 5px 0px rgba(0,0,0,0.49);
+}
