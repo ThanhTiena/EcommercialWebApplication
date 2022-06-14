@@ -11,7 +11,9 @@ namespace EcommercialWebApplication.Models
         }
 
         public int Id { get; set; }
-
+        
+        [ForeignKey("Customer")]
+        public int UserId {get; set; }
         public int? CouponId { get; set; }
 
         [Display(Name = "Order Status")]

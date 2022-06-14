@@ -2,23 +2,24 @@
 
 #nullable disable
 
-namespace EcommercialWebApplication.Data.Migrations
+namespace EcommercialWebApplication.Migrations
 {
     public partial class updateOrder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ShipEmail",
+            migrationBuilder.AddColumn<int>(
+                name: "UserId",
                 table: "Order",
-                type: "nvarchar(max)",
-                nullable: true);
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ShipEmail",
+                name: "UserId",
                 table: "Order");
         }
     }

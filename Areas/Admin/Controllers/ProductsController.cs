@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EcommercialWebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = ("Admin"))]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;

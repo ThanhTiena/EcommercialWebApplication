@@ -1,6 +1,7 @@
 ﻿using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
 using EcommercialWebApplication.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommercialWebApplication.Areas.Customer.Controllers
@@ -20,6 +21,8 @@ namespace EcommercialWebApplication.Areas.Customer.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CheckOut(Order order)
         {
             decimal total = 0;

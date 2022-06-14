@@ -1,10 +1,11 @@
 ﻿using EcommercialWebApplication.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommercialWebApplication.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Customer,IdentityRole<int>,int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -15,6 +16,8 @@ namespace EcommercialWebApplication.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +27,10 @@ namespace EcommercialWebApplication.Data
             modelBuilder.Entity<Coupon>().ToTable("Coupon");
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<OrderDetail>().ToTable("OrderDetails");
-
+            modelBuilder.Entity<Customer>()
+                .HasOne(a => a.Profile)
+                .WithOne(a => a.Customer)
+                .HasForeignKey<Profile>(c => c.CustomerId);
 
             modelBuilder.Entity<OrderDetail>().HasKey(o => new { o.OrderId, o.ProductId });
         }
