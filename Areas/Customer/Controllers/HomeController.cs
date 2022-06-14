@@ -1,6 +1,7 @@
 ﻿using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
 using EcommercialWebApplication.Utility;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -17,6 +18,7 @@ namespace EcommercialWebApplication.Controllers
         {
             _logger = logger;
             _context = context;
+
         }
 
         public IActionResult Index()
@@ -28,15 +30,25 @@ namespace EcommercialWebApplication.Controllers
 
         public ActionResult Detail(int? id)
         {
-            if(id == null)
+            IDictionary<int, int> cartQuantities = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+            if (cartQuantities == null)
+            {
+                cartQuantities = new Dictionary<int, int>();
+            }
+            if (id == null)
             {
                 return NotFound();
             }
-            var product = _context.Products.Include(c => c.Category).FirstOrDefault(c=> c.Id == id);
-            if(product == null)
+            var product = _context.Products.Include(c => c.Category).FirstOrDefault(c => c.Id == id);
+            if (product == null)
             {
                 return NotFound();
             }
+            if (!cartQuantities.ContainsKey(product.Id))
+            {
+                cartQuantities.Add(product.Id, 1);
+            }
+            HttpContext.Session.Set("Quantities", cartQuantities);
             return View(product);
         }
 
@@ -45,6 +57,11 @@ namespace EcommercialWebApplication.Controllers
         public ActionResult ProductDetail(int? id)
         {
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
+            IDictionary<int, int> cartQuantities = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+            if(cartQuantities == null)
+            {
+                cartQuantities= new Dictionary<int, int>();
+            }
             if (list == null)
             {
                 list = new List<Product>();
@@ -58,22 +75,34 @@ namespace EcommercialWebApplication.Controllers
             {
                 return NotFound();
             }
-            
+
             list.Add(product);
+            cartQuantities[product.Id] = 1;
+            HttpContext.Session.Set("Quantities", cartQuantities);
             HttpContext.Session.Set("products", list);
-            return View(product);
+            return RedirectToAction("Cart", "Home");
         }
 
         [HttpPost]
         public IActionResult Remove(int? id)
         {
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
+            IDictionary<int, int> cartQuantities = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+            if (cartQuantities == null)
+            {
+                cartQuantities = new Dictionary<int, int>();
+            }
             if (list != null)
             {
                 var product = list.FirstOrDefault(c => c.Id == id);
-                if(product != null)
+                if (product != null)
                 {
                     list.Remove(product);
+                    if (cartQuantities.ContainsKey(product.Id))
+                    {
+                        cartQuantities.Remove(product.Id);
+                    }
+                    HttpContext.Session.Set("Quantities", cartQuantities);
                     HttpContext.Session.Set("products", list);
 
                 }
@@ -83,12 +112,22 @@ namespace EcommercialWebApplication.Controllers
         public IActionResult RemoveFromCart(int? id)
         {
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
+            IDictionary<int, int> cartQuantities = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+            if (cartQuantities == null)
+            {
+                cartQuantities = new Dictionary<int, int>();
+            }
             if (list != null)
             {
                 var product = list.FirstOrDefault(c => c.Id == id);
                 if (product != null)
                 {
                     list.Remove(product);
+                    if (cartQuantities.ContainsKey(product.Id))
+                    {
+                        cartQuantities.Remove(product.Id);
+                    }
+                    HttpContext.Session.Set("Quantities", cartQuantities);
                     HttpContext.Session.Set("products", list);
 
                 }
@@ -98,25 +137,27 @@ namespace EcommercialWebApplication.Controllers
 
         public IActionResult Cart()
         {
-            List<Product> list = HttpContext.Session.Get<List<Product>>("products");
-            if(list == null)
-            {
-                list =new List<Product>();
-            }
-
-            return View(list);
+            return View();
         }
-
-
-
-
-
-
-
-
-
-
-
+        [HttpPost]
+        public IActionResult AddQuantity(OrderDetail orderDetail)
+        {
+            IDictionary<int, int> orderDetails = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+            if(orderDetails == null)
+            {
+                orderDetails= new Dictionary<int, int>();
+            }
+            if(orderDetail == null)
+            {
+                orderDetail= new OrderDetail();
+            }
+            if (orderDetails.ContainsKey(orderDetail.ProductId))
+            {
+                orderDetails[orderDetail.ProductId] = orderDetail.quantity;
+            }
+            HttpContext.Session.Set("Quantities", orderDetails);
+            return RedirectToAction(nameof(Cart));
+        }
 
         public IActionResult Privacy()
         {

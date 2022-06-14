@@ -1,5 +1,7 @@
 ﻿@using EcommercialWebApplication.Utility
 @using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity;
+
 @inject IHttpContextAccessor HttpContextAccessor
 @model EcommercialWebApplication.Models.Order
 @{
@@ -29,7 +31,6 @@
 <form asp-action="CheckOut" method="post" enctype="multipart/form-data">
     <div class="p-4 rounded border row">
         <div asp-validation-summary="ModelOnly" class="text-danger">
-
         </div>
         <div class="col-6">
             <div class="form-group row">
@@ -38,6 +39,7 @@
                 </div>
                 <div class="col-8">
                     <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="UserId" value="" />
                     <input asp-for="ShipName" class="form-control" />
                     <span asp-validation-for="ShipName" class="text-danger"></span>
                 </div>

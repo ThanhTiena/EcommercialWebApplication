@@ -57,6 +57,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
     options.SlidingExpiration = true;
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
 ﻿using EcommercialWebApplication.Models;
+using EcommercialWebApplication.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,8 @@ namespace EcommercialWebApplication.Controllers
 
                 if (result.Succeeded)
                 {
+                    var _user = await _userManager.FindByNameAsync(model.UserName);
+                    HttpContext.Session.Set("USERID",_user.Id);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -62,11 +65,11 @@ namespace EcommercialWebApplication.Controllers
                 user.PhoneNumber = registerModel.PhoneNumber;
             };
             var result = await _userManager.CreateAsync(user, registerModel.Password);
-
+            
             if (result.Succeeded)
             {
-                var _user = await _userManager.FindByNameAsync(registerModel.UserName);
-                await _userManager.AddToRoleAsync(user, "Customer");
+               
+                await _userManager.AddToRoleAsync(user, "Admin");
             }
             else
             {

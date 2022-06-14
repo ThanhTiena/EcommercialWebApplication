@@ -9,6 +9,7 @@
     {
         product = products.FirstOrDefault(c => c.Id == Model.Id);
     }
+
 }
 @{
     ViewData["Title"] = "Detail";
@@ -30,7 +31,6 @@
                     <input type="hidden" asp-for="Id" />
                     <input asp-for="Name" readonly="readonly" class="form-control" />
                 </div>
-                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <div class="col-4">
@@ -39,19 +39,15 @@
                 <div class="col-8">
                     <input asp-for="Price" readonly="readonly" class="form-control" />
                 </div>
-                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Stock"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Stock" readonly="readonly" readonly="readonly" class="form-control" />
+                    <input asp-for="Stock" readonly="readonly" class="form-control" />
                 </div>
-                <span asp-validation-for="Stock" class="text-danger"></span>
             </div>
-
-
             <div class="form-group row">
                 <div class="col-4">
                 </div>
@@ -65,7 +61,6 @@
                         else
                         {
                             <input disabled type="submit" class="btn btn-info form-control" value="Add to Cart" />
-
                         }
                     }
                     else
@@ -99,5 +94,6 @@
 @section Scripts{
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    }
+
 }

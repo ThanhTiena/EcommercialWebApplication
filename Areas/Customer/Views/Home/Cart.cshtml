@@ -1,43 +1,63 @@
 ﻿@using EcommercialWebApplication.Models
-@model List<Product> 
+@model OrderDetail
+@using EcommercialWebApplication.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpcContextAccesstor
+@{
+    List<Product> products = HttpcContextAccesstor.HttpContext.Session.Get<List<Product>>("products");
+    IDictionary<int, int> orderDetails = HttpcContextAccesstor.HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+    if (products == null)
+    {
+        products = new List<Product>();
+    }
+    if(orderDetails == null)
+    {
+        orderDetails = new Dictionary<int,int>();
+    }
+}
 @{
     ViewData["Title"] = "Cart";
+
 }
 
 <h1> Your Cart</h1>
 
-<br/>
-
+<br />
 <div class="row">
     <table class="table table-bordered">
         <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="~/@item.Image" width="200px" height="150px"/>
-                </td>
-                <td>@item.Name</td>
-                <td>@item.Price</td>
-                <td>
-                    <input type="number" value="1"  min=1 max="@item.Stock"/>
-                </td>
-                <td>
-                    <a asp-area="" asp-action="RemoveFromCart" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">
-                        <i class="fas fa-trash-alt">Delete</i>
-                    </a>
-                </td>
-            </tr>
-        }
+            @foreach (var item in products)
+            {
+                <tr>
+                    <td>
+                        <img src="~/@item.Image" width="200px" height="150px" />
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <form method="post">
+                            <input asp-for="ProductId" value=@item.Id type="hidden" />
+                            <input asp-for="quantity" value=@orderDetails[@item.Id] />
+                            <button type="submit" class="btn btn-primary" asp-action="AddQuantity">Update</button>
+                        </form>
+
+                    </td>
+                    <td>
+                        <a asp-area="" asp-action="RemoveFromCart" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">
+                            <i class="fas fa-trash-alt">Delete</i>
+                        </a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
@@ -47,8 +67,14 @@
     </div>
     <div class="col-6 text-right">
         <h3>Total Amount</h3>
-        <h3>Grant Total : @Model.Sum(c=>c.Price) </h3>
+        @{
+            var total = 0;
+            foreach(var product in products)
+            {
+                total += (int) product.Price * orderDetails[product.Id];
+            }
+        }
+        <h3>Grant Total : @total </h3>
         <a asp-area="Customer" asp-action="Checkout" asp-controller="Order" class="btn btn-info">Process to Checkout</a>
     </div>
 </div>
-

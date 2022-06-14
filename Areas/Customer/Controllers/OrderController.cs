@@ -2,17 +2,21 @@
 using EcommercialWebApplication.Models;
 using EcommercialWebApplication.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EcommercialWebApplication.Areas.Customer.Controllers
+namespace Controllers
 {
     [Area("Customer")]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public OrderController (ApplicationDbContext context)
+        private readonly UserManager<Customer> _userManager;
+
+        public OrderController (ApplicationDbContext context, UserManager<Customer> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult CheckOut()
@@ -21,22 +25,25 @@ namespace EcommercialWebApplication.Areas.Customer.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin")]
-        [Authorize(Roles = "Customer")]
+
         public async Task<IActionResult> CheckOut(Order order)
         {
             decimal total = 0;
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
-            if(list != null)
+            IDictionary<int,int> orderDetails = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
+            if (list != null && orderDetails != null)
             {
                 foreach(var product in list)
                 {
                     OrderDetail detail = new OrderDetail();
                     detail.ProductId = product.Id;
-                    total += product.Price;
+                    detail.quantity = orderDetails[product.Id];
+                    total += product.Price * detail.quantity;
                     order.OrderDetails.Add(detail);
                 }
             }
+
+            order.UserId = HttpContext.Session.Get<int>("USERID");
             order.OrderDate = DateTime.Now;
             order.Status = OrderStatus.InProgress;
             order.Total = total;
