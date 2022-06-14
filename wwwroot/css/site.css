@@ -1,30 +1,27 @@
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    font-size: 14px;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     margin-bottom: 60px;
 }
+
 .categories_list {
     padding-top: 20px;
     padding-bottom: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.categories_list .card {
-    margin-top: 10px;
-}
+
+    .categories_list .card {
+        margin-top: 10px;
+    }
+
 .category_card:hover {
     color: orangered;
     cursor: pointer;
@@ -32,28 +29,75 @@ body {
     -webkit-box-shadow: 6px 9px 5px 0px rgba(0,0,0,0.49);
     -moz-box-shadow: 6px 9px 5px 0px rgba(0,0,0,0.49);
 }
+
 .categories_list h2 {
     margin-left: 10px;
     color: grey;
 }
-.product-list h2 {
-    margin-left: 10px;
-    color: grey;
-    margin-bottom: 10px;
+
+.product-list {
+    margin-bottom: 50px;
 }
-.product-list .card-header {
-    padding: 20px;
-}
+
+    .product-list h2 {
+        margin-left: 10px;
+        color: grey;
+        margin-bottom: 10px;
+    }
+
+    .product-list .card-header {
+        padding: 20px;
+    }
+
 .card-header img {
     margin-left: 18%;
 }
+
 .card-body h5 {
     text-align: center;
 }
-.card-body label b {
-    text-align: center;
-}
+
 .btn-group {
-    right:0;
+    margin-left: 60%;
 }
 
+.btn-success {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.btn-success:hover {
+    background-color: sandybrown !important;
+}
+
+.footer-detail {
+    padding-top: 30px;
+    height: 300px;
+    text-align: center;
+}
+
+.footer-detail p {
+    margin-bottom: 0px !important;
+    line-height: 40px;
+    color:gray;
+}
+
+
+@media only screen and (max-width: 740px) {
+    html {
+        font-size: 16px;
+    }
+
+    .navbar-toggler {
+        margin-left: 40vw;
+    }
+    .nav-item {
+        text-align: center !important;
+    }
+    .footer-detail {
+        height: 350px;
+    }
+    .btn-group {
+        margin-left: 50%;
+    }
+}

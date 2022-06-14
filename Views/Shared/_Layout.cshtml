@@ -22,7 +22,6 @@
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images//logo.png" alt="Shopee Logo" height="36" />
-                    EcommercialWebApplication
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +43,9 @@
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Products" asp-action="Index">Admin</a>
                             </li>
                         }
+                        <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">CreateRoles</a>
+                            </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -56,9 +58,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - EcommercialWebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top">
+        <div class="container footer-detail">
+            <p>Address: Capital Place Building, No. 29 Lieu Giai Street, Ngoc Khanh Ward, Ba Dinh District, Hanoi City, Vietnam.</p>
+            <p><img src="~/images//logo.png" alt="Shopee Logo" height="100"/></p>
+            <p>Total radio support: 19001221</p>
+            <p>&copy; 2022 - Copyright belong to Shoppee Company - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

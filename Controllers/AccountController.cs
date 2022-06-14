@@ -66,7 +66,7 @@ namespace EcommercialWebApplication.Controllers
             if (result.Succeeded)
             {
                 var _user = await _userManager.FindByNameAsync(registerModel.UserName);
-                await _userManager.AddToRoleAsync(user, "Customer");
+                await _userManager.AddToRoleAsync(user, "Admin");
             }
             else
             {
