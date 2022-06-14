@@ -82,7 +82,7 @@ namespace EcommercialWebApplication.Controllers
 
         public IActionResult AccessDenied()
         {
-            return View();
+            return RedirectToAction("Login","Account");
         }
 
         [HttpPost]
@@ -90,6 +90,42 @@ namespace EcommercialWebApplication.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(Account account)
+        {
+            var result = await _userManager.FindByEmailAsync(account.Email);
+            if (result != null)
+            {
+                return RedirectToAction(nameof(ChangePassword), account);
+            }
+            ViewData["Error"] = "Email Invalid";
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ChangePassword(Account model)
+        {
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangePasswordUpdate(Account account)
+        {
+            var userId = HttpContext.Session.Get<int>("USERID");
+            var oldUser = await _userManager.FindByIdAsync(userId.ToString());
+            if (oldUser != null)
+            {
+                var result = await _userManager.ChangePasswordAsync(oldUser, account.CurrentPassword, account.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Login));
+                }
+            }
+            return View();
         }
     }
 }

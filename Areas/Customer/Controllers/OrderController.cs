@@ -4,6 +4,7 @@ using EcommercialWebApplication.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Controllers
 {
@@ -25,7 +26,8 @@ namespace Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CheckOut(Order order)
         {
             decimal total = 0;
@@ -40,6 +42,13 @@ namespace Controllers
                     detail.quantity = orderDetails[product.Id];
                     total += product.Price * detail.quantity;
                     order.OrderDetails.Add(detail);
+
+                    var oldProduct = await _context.Products
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(m => m.Id == product.Id);
+                    oldProduct.Stock -= orderDetails[product.Id];
+                    _context.Update(oldProduct);
+                    await _context.SaveChangesAsync();
                 }
             }
 

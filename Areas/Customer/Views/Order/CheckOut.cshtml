@@ -1,16 +1,15 @@
 ﻿@using EcommercialWebApplication.Utility
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Identity;
-
-@inject IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpcContextAccessor
 @model EcommercialWebApplication.Models.Order
 @{
     ViewData["Title"] = "Order Details";
 }
 @{
 
-    List<Product> products = HttpContextAccessor.HttpContext.Session.Get<List<Product>>("products");
-   
+    List<Product> products = HttpcContextAccessor.HttpContext.Session.Get<List<Product>>("products");
+    var total = HttpcContextAccessor.HttpContext.Session.Get<decimal>("TotalPrice");
     if (products == null)
     {
         products=new List<Product>();

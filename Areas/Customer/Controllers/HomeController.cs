@@ -1,6 +1,7 @@
 ﻿using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
 using EcommercialWebApplication.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 namespace EcommercialWebApplication.Controllers
 {
     [Area("Customer")]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,7 +22,6 @@ namespace EcommercialWebApplication.Controllers
             _context = context;
 
         }
-
         public IActionResult Index()
         {
             var products = _context.Products.Include(c => c.Category).ToList();
