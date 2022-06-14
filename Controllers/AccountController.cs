@@ -1,4 +1,5 @@
-﻿using EcommercialWebApplication.Models;
+﻿using EcommercialWebApplication.Data;
+using EcommercialWebApplication.Models;
 using EcommercialWebApplication.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +11,14 @@ namespace EcommercialWebApplication.Controllers
         public readonly UserManager<Customer> _userManager;
         public readonly RoleManager<IdentityRole<int>> _roleManager;
         public readonly SignInManager<Customer> _signInManager;
+        public readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<Customer> userManager, RoleManager<IdentityRole<int>> roleManager, SignInManager<Customer> signInManager)
+        public AccountController(ApplicationDbContext context, UserManager<Customer> userManager, RoleManager<IdentityRole<int>> roleManager, SignInManager<Customer> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _context = context;
         }
         public async Task<IActionResult> Index()
         {
@@ -40,7 +43,7 @@ namespace EcommercialWebApplication.Controllers
                 if (result.Succeeded)
                 {
                     var _user = await _userManager.FindByNameAsync(model.UserName);
-                    HttpContext.Session.Set("USERID",_user.Id);
+                    HttpContext.Session.Set("USERID", _user.Id);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -65,10 +68,11 @@ namespace EcommercialWebApplication.Controllers
                 user.PhoneNumber = registerModel.PhoneNumber;
             };
             var result = await _userManager.CreateAsync(user, registerModel.Password);
-            
+
             if (result.Succeeded)
             {
                 var _user = await _userManager.FindByNameAsync(registerModel.UserName);
+                HttpContext.Session.Set("USERID", _user.Id);
                 await _userManager.AddToRoleAsync(user, "Customer");
             }
             else
@@ -77,12 +81,12 @@ namespace EcommercialWebApplication.Controllers
                 return View();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("CustomerInformation", "Account");
         }
 
         public IActionResult AccessDenied()
         {
-            return RedirectToAction("Login","Account");
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -126,6 +130,40 @@ namespace EcommercialWebApplication.Controllers
                 }
             }
             return View();
+        }
+        [HttpGet]
+        public IActionResult CustomerInformation()
+        {
+            Profile profile = new Profile();
+            return View(profile);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CustomerInformation(Profile profile)
+        {
+            if (profile == null)
+            {
+                return NotFound();
+            }
+
+            var userId = HttpContext.Session.Get<int>("USERID");
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null || userId == null)
+            {
+                return NotFound();
+            }
+            var _profile = _context.Profiles.FirstOrDefault(p => p.FirstName == profile.FirstName && p.LastName == profile.LastName);
+            if(_profile == null)
+            {
+                profile.CustomerId = user.Id;
+                profile.PhoneNumber = user.PhoneNumber;
+                profile.EmailAddress = user.Email;
+                _context.Profiles.Add(profile);
+                _context.SaveChanges();
+                return RedirectToAction("Login", "Account");
+
+            }
+            ViewData["Error"] = "User has been existed";
+            return View(profile);
         }
     }
 }
