@@ -22,21 +22,18 @@
 }
 
 <h1>CheckOut</h1>
-
-
 <br />
-
 <h2 class="text-info">Order Details</h2>
-<form asp-action="CheckOut" method="post" enctype="multipart/form-data">
+<form asp-action="CheckOut" method="post" enctype="multipart/form-data" class="form-checkout">
     <div class="p-4 rounded border row">
         <div asp-validation-summary="ModelOnly" class="text-danger">
         </div>
         <div class="col-6">
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="ShipName"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="UserId" value="" />
                     <input asp-for="ShipName" class="form-control" />
@@ -44,32 +41,32 @@
                 </div>
                 
             </div>
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="ShipPhoneNumber"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input asp-for="ShipPhoneNumber" class="form-control" />
                     <span asp-validation-for="ShipPhoneNumber" class="text-danger"></span>
                 </div>
                
             </div>
 
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="ShipAddress"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input asp-for="ShipAddress" class="form-control" />
                     <span asp-validation-for="ShipAddress" class="text-danger"></span>
                 </div>
                 
             </div>
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="ShipEmail"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input asp-for="ShipEmail" class="form-control" />
                     <span asp-validation-for="ShipEmail" class="text-danger"></span>
                 </div>
@@ -78,9 +75,10 @@
         </div>
 
         <div class="col-6">
+            <h4 style="color: orangered;">Cart Products</h4>
             <table class="table table-bordered">
                 <thead>
-                <tr>
+                <tr class="head-tr-table">
                     <th>Image</th>
                     <th>Name</th>
                     <th>Price</th>
@@ -89,7 +87,7 @@
                 <tbody>
                 @foreach (var item in products)
                 {
-                    <tr>
+                    <tr class="body-tr-table">
                         <td>
                             <img src="~/@item.Image" height="100px" width="150px"/>
                         </td>

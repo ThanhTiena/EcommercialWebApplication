@@ -20,13 +20,12 @@
 
 }
 
-<h1> Your Cart</h1>
-
+<h2 class="text-info"> Your Cart</h2
 <br />
 <div class="row">
     <table class="table table-bordered">
         <thead>
-            <tr>
+            <tr class="head-tr-table">
                 <th>Image</th>
                 <th>Name</th>
                 <th>Price</th>
@@ -37,9 +36,9 @@
         <tbody>
             @foreach (var item in products)
             {
-                <tr>
+                <tr class="body-tr-table">
                     <td>
-                        <img src="~/@item.Image" width="200px" height="150px" />
+                        <img src="~/@item.Image" width="150px" height="150px" />
                     </td>
                     <td>@item.Name</td>
                     <td>@item.Price</td>
@@ -47,12 +46,12 @@
                         <form method="post">
                             <input asp-for="ProductId" value=@item.Id type="hidden" />
                             <input asp-for="quantity" value=@orderDetails[@item.Id] max="@item.Stock" min=1 onkeydown="false"/>
-                            <button type="submit" class="btn btn-primary" asp-action="AddQuantity">Update</button>
+                            <button type="submit" class="btn btn-info btn-update" asp-action="AddQuantity">Update</button>
                         </form>
 
                     </td>
                     <td>
-                        <a asp-area="" asp-action="RemoveFromCart" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">
+                        <a asp-area="" asp-action="RemoveFromCart" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger btn-delete">
                             <i class="fas fa-trash-alt">Delete</i>
                         </a>
                     </td>
@@ -61,11 +60,11 @@
         </tbody>
     </table>
 </div>
-<div class="row">
-    <div class="col-6">
+<div class="row cart-static">
+    <div class="col-9">
         <a asp-action="Index" asp-controller="Home" class="btn btn-success">Back to Home</a>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-3 money-static">
         <h3>Total Amount</h3>
         @{
             decimal total = 0;

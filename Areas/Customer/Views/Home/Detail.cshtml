@@ -22,74 +22,77 @@
     <div class="p-4 rounded border row">
         <div asp-validation-summary="ModelOnly" class="text-danger">
         </div>
-        <div class="col-8">
-            <div class="form-group row">
-                <div class="col-4">
+        <div class="col-md-8 col-12">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="@Model.Name"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input type="hidden" asp-for="Id" />
                     <input asp-for="Name" readonly="readonly" class="form-control" />
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="Price"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input asp-for="Price" readonly="readonly" class="form-control" />
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
                     <label asp-for="Stock"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <input asp-for="Stock" readonly="readonly" class="form-control" />
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
+            <div class="form-group row product-item">
+                <div class="col-3">
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     @if (product == null)
                     {
                         if (@Model.Stock > 0)
                         {
-                            <input type="submit" class="btn btn-info form-control" value="Add to Cart" />
+                            <input type="submit" class="btn btn-info form-control form-control-button" value="Add to Cart" />
                         }
                         else
                         {
-                            <input disabled type="submit" class="btn btn-info form-control" value="Add to Cart" />
+                            <input disabled type="submit" class="btn btn-info form-control form-control-button" value="Add to Cart" />
                         }
                     }
                     else
                     {
-                        <button type="submit" class="btn btn-danger form-control" asp-action="Remove" asp-route-id="@Model.Id">Remove to Cart</button>
+                        <button type="submit" class="btn btn-danger form-control form-control-button" asp-action="Remove" asp-route-id="@Model.Id">Remove to Cart</button>
                     }
-
                 </div>
             </div>
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+        <div class="col-md-4 col-12">
+            <div class="form-group row">
+                <div class="col-6 product-img">
+                    <img src="~/@Model.Image" width="180px" height="180px" style="border-radius: 5px;border: 1px solid #efefef" />
+                </div>
+                <div class="col-6">
+                    @if (Model.Stock > 0)
+                    {
+                        <img src="~/images/instock-logo.jpg" width="180px" height="180px" />
+                    }
+                    else
+                    {
+                        <img src="~/images/outofstock.png" width="180px" height="180px" />
+                    }
+                </div>
             </div>
         </div>
-        <div class="col-1"></div>
-        <div class="col-3">
-            <img src="~/@Model.Image" width="100%" height="250px" style="border-radius: 5px;border: 1px solid #efefef" />
-            @if (Model.Stock > 0)
-            {
-                <img src="~/images/instock-logo.jpg" width="200px" height="200px" />
-            }
-            else
-            {
-                <img src="~/images/outofstock.png" width="200px" height="200px" />
-            }
-
-        </div>
-
+    </div>
+    <div class="form-group">
+        <a asp-action="Index" class="btn btn-success">Back to List</a>
     </div>
 </form>
+
 
 @section Scripts{
     @{
