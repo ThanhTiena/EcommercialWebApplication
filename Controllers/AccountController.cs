@@ -1,6 +1,7 @@
 ﻿using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
 using EcommercialWebApplication.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace EcommercialWebApplication.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+
         public async Task<IActionResult> Index()
         {
             await _roleManager.CreateAsync(new IdentityRole<int>("Admin"));
@@ -36,18 +38,20 @@ namespace EcommercialWebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(Account model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
                     var _user = await _userManager.FindByNameAsync(model.UserName);
-                    HttpContext.Session.Set("USERID", _user.Id);
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attemp");
+                }
             }
-            ModelState.AddModelError(string.Empty, "Invalid login attemp");
             return View(model);
 
         }
@@ -73,11 +77,16 @@ namespace EcommercialWebApplication.Controllers
             {
                 var _user = await _userManager.FindByNameAsync(registerModel.UserName);
                 HttpContext.Session.Set("USERID", _user.Id);
-                await _userManager.AddToRoleAsync(user, "Customer");
+                await _userManager.AddToRoleAsync(user, "Admin");
             }
             else
             {
-                ViewData["Error"] = "PasswordTooShort,PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper";
+                var errors = "";
+                foreach (var error in result.Errors.ToList())
+                {
+                    errors += error.Code + " ";
+                }
+                ViewData["Errors"] = errors;
                 return View();
             }
 
@@ -112,23 +121,33 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult ChangePassword(Account model)
+        public IActionResult ChangePassword()
         {
-            return View(model);
+            return View();
         }
         [HttpPost]
-        public async Task<IActionResult> ChangePasswordUpdate(Account account)
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(Account account)
         {
-            var userId = HttpContext.Session.Get<int>("USERID");
-            var oldUser = await _userManager.FindByIdAsync(userId.ToString());
-            if (oldUser != null)
+            if (_signInManager.IsSignedIn(User))
             {
-                var result = await _userManager.ChangePasswordAsync(oldUser, account.CurrentPassword, account.Password);
-                if (result.Succeeded)
+                var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                var userId = currentUser.Id;
+                if (userId != 0)
                 {
-                    return RedirectToAction(nameof(Login));
+                    var oldUser = await _userManager.FindByIdAsync(userId.ToString());
+                    if (oldUser != null)
+                    {
+                        var result = await _userManager.ChangePasswordAsync(oldUser, account.CurrentPassword, account.Password);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Profile", "Profile");
+                        }
+                    }
                 }
+
             }
+
             return View();
         }
         [HttpGet]
@@ -138,30 +157,36 @@ namespace EcommercialWebApplication.Controllers
             return View(profile);
         }
         [HttpPost]
-        public async Task<IActionResult> CustomerInformation(Profile profile)
+        public async Task<IActionResult> CustomerInformation([Bind("FirstName,LastName,Dob,Address,Nationality")] Profile profile)
         {
-            if (profile == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                if (profile == null)
+                {
+                    return NotFound();
+                }
+                var userId = HttpContext.Session.Get<int>("USERID");
+                if (userId != 0)
+                {
+                    var user = await _userManager.FindByIdAsync(userId.ToString());
+                    if (user == null || userId == 0)
+                    {
+                        return NotFound();
+                    }
+                    var _profile = _context.Profiles.FirstOrDefault(p => p.FirstName == profile.FirstName && p.LastName == profile.LastName);
+                    if (_profile == null)
+                    {
+                        profile.CustomerId = user.Id;
+                        profile.PhoneNumber = user.PhoneNumber;
+                        profile.EmailAddress = user.Email;
+                        _context.Profiles.Add(profile);
+                        _context.SaveChanges();
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+
             }
 
-            var userId = HttpContext.Session.Get<int>("USERID");
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null || userId == null)
-            {
-                return NotFound();
-            }
-            var _profile = _context.Profiles.FirstOrDefault(p => p.FirstName == profile.FirstName && p.LastName == profile.LastName);
-            if(_profile == null)
-            {
-                profile.CustomerId = user.Id;
-                profile.PhoneNumber = user.PhoneNumber;
-                profile.EmailAddress = user.Email;
-                _context.Profiles.Add(profile);
-                _context.SaveChanges();
-                return RedirectToAction("Login", "Account");
-
-            }
             ViewData["Error"] = "User has been existed";
             return View(profile);
         }

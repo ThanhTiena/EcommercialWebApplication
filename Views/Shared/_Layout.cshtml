@@ -2,7 +2,16 @@
 @inject SignInManager<Customer> SignInManager
 @inject UserManager<Customer> UserManager
 @using EcommercialWebApplication.Utility
-
+@{
+    var isSign = false;
+    var roles = new string[1];
+    if (SignInManager.IsSignedIn(User))
+    {
+        isSign = true;
+        var currentUser = UserManager.FindByNameAsync(User.Identity.Name).Result;
+        roles = UserManager.GetRolesAsync(currentUser).Result.ToArray();
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,13 +43,17 @@
                                 Home
                             </a>
                         </li>
-                        @if (SignInManager.IsSignedIn(User))
+                        
+                        @if (roles.Contains("Admin") && isSign)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Coupons" asp-action="Index">Coupons</a>
                             </li>
                         }
                     </ul>
@@ -52,17 +65,60 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <partial name="_ChatPartial" />
         </main>
     </div>
 
     <footer class="border-top">
         <div class="container footer-detail">
             <p>Address: Capital Place Building, No. 29 Lieu Giai Street, Ngoc Khanh Ward, Ba Dinh District, Hanoi City, Vietnam.</p>
-            <p><img src="~/images//logo.png" alt="Shopee Logo" height="100"/></p>
+            <p><img src="~/images//logo.png" alt="Shopee Logo" height="100" /></p>
             <p>Total radio support: 19001221</p>
             <p>&copy; 2022 - Copyright belong to Shoppee Company - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
         </div>
     </footer>
+    <script>
+        let chatOn = false;
+        let chatRecord = ["hello"];
+        function onChat() {
+            if (!chatOn) {
+                let chat = document.getElementsByClassName('onchat')[0];
+                chat.style.display = "block";
+                let box = document.getElementsByClassName('chatbox')[0];
+                box.style.height = "500px";
+                box.style.width = "300px";
+                chat.style.height = "500px";
+                chat.style.width = "300px";
+                chat.style.backgroundColor = "#ccc";
+                box.childNodes[1].style.display = "block";
+                let icon = document.getElementById("chat-open");
+                icon.style.display = "none";
+                // box.childNodes[2].style.display = "block";
+                chatOn = true;
+                box.classList.add('slideup');
+                setTimeout(() => {
+                    box.classList.remove('slideup');
+                }, 500);
+            }
+        }
+
+        function onCloseChat() {
+            console.log(chatOn);
+
+            let chat = document.getElementsByClassName('onchat')[0];
+            chat.style.display = "none";
+            let box = document.getElementsByClassName('chatbox')[0];
+            box.style.height = "50px";
+            box.style.width = "50px";
+            chat.style.removeProperty('background-color');
+            box.childNodes[1].style.display = "none";
+            let icon = document.getElementById("chat-open");
+            icon.style.display = "block";
+            // box.childNodes[2].style.display = "none";
+            chatOn = false;
+
+        }
+    </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

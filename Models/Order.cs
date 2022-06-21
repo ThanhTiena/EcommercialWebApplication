@@ -9,11 +9,10 @@ namespace EcommercialWebApplication.Models
         {
             OrderDetails = new List<OrderDetail>();
         }
-
         public int Id { get; set; }
-        
+
         [ForeignKey("Customer")]
-        public int UserId {get; set; }
+        public int UserId { get; set; }
         public int? CouponId { get; set; }
 
         [Display(Name = "Order Status")]
@@ -24,7 +23,7 @@ namespace EcommercialWebApplication.Models
 
         [Display(Name = "Address")]
         public string ShipAddress { get; set; }
-        
+
         [Display(Name = "Phone")]
         public string ShipPhoneNumber { get; set; }
 
@@ -34,7 +33,7 @@ namespace EcommercialWebApplication.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; set; }
 
-        public string PaymentMethod { get; set; }
+        public PaymentMethod? PaymentMethod { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -52,5 +51,14 @@ namespace EcommercialWebApplication.Models
         Shipping,
         Success,
         Canceled
+    }
+    public enum PaymentMethod
+    {
+        [Display(Name ="COD")]
+        Cash, 
+        [Display(Name ="Online Banking")]
+        OnlineBanking,
+        [Display(Name = "Zalo Payment")]
+        MobilePayments
     }
 }

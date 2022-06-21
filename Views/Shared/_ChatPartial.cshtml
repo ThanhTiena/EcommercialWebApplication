@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="chatbox">
+    <div class="onchat" style=" display: none; ">
+        <div class="chat-title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        
+                    </div>
+                    <div class="col-md-5">
+                        <img src="~/images/down.png" onClick="onCloseChat()">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-chat">
+            <iframe src="https://chat-appplication-dotnet.herokuapp.com/" width="99%" height="100%" id="chat-frame"></iframe>
+        </div>
+
+    </div>
+    <img style="width: 100%" src='~/images/chat.png' onClick='onChat()' id='chat-open'>
+    <img style='width: 50px; display: none' src='~/images/cross.png' onClick='onCloseChat()'>
+</div>

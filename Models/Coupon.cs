@@ -8,6 +8,7 @@ namespace EcommercialWebApplication.Models
         [Required]
         public string Code { get; set; }
         public int Count { get; set; }
+        public decimal Discount { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -16,7 +17,14 @@ namespace EcommercialWebApplication.Models
 
         [Display(Name = "Description")]
         public string Description { get; set; }
-
+        public Type? Type { get; set; }
         public ICollection<Order> Orders { get; set; }
+    }
+
+    public enum Type
+    {
+        General,
+        Specific,
+        Special
     }
 }

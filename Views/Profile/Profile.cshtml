@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Customer> SignInManager
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Manage your account</h1>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item"><a class="nav-link" asp-controller="Profile" asp-action="ProfileDetail">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="History" asp-action="HistoryOrders">History Orders</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+        </div>
+    </div>
+</div>
+

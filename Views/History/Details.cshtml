@@ -1,43 +1,22 @@
 ﻿@using EcommercialWebApplication.Utility
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Identity;
-@inject IHttpContextAccessor HttpcContextAccessor
 @model EcommercialWebApplication.Models.Order
 @{
     ViewData["Title"] = "Order Details";
 }
-@{
 
-    List<Product> products = HttpcContextAccessor.HttpContext.Session.Get<List<Product>>("products");
-    var total = HttpcContextAccessor.HttpContext.Session.Get<decimal>("TotalPrice");
-    if (products == null)
-    {
-        products = new List<Product>();
-    }
-
-}
-
-@{
-    ViewData["Title"] = "CheckOut";
-}
-
-<h1>CheckOut</h1>
+<h1>Details</h1>
 <br />
 <h2 class="text-info">Order Details</h2>
-<form asp-action="CheckOut" method="post" enctype="multipart/form-data" class="form-checkout">
     <div class="p-4 rounded border row">
-        <div asp-validation-summary="ModelOnly" class="text-danger">
-        </div>
         <div class="col-6">
             <div class="form-group row product-item">
                 <div class="col-3 form-label">
                     <label asp-for="ShipName"></label>
                 </div>
                 <div class="col-9">
-                    <input type="hidden" asp-for="Id" />
-                    <input type="hidden" asp-for="UserId" value="" />
-                    <input asp-for="ShipName" class="form-control" />
-                    <span asp-validation-for="ShipName" class="text-danger"></span>
+                    <input asp-for="ShipName" class="form-control" disabled=true/>
                 </div>
 
             </div>
@@ -46,8 +25,7 @@
                     <label asp-for="ShipPhoneNumber"></label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="ShipPhoneNumber" class="form-control" />
-                    <span asp-validation-for="ShipPhoneNumber" class="text-danger"></span>
+                    <input asp-for="ShipPhoneNumber" class="form-control" disabled=true/>
                 </div>
 
             </div>
@@ -57,8 +35,7 @@
                     <label asp-for="ShipAddress"></label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="ShipAddress" class="form-control" />
-                    <span asp-validation-for="ShipAddress" class="text-danger"></span>
+                    <input asp-for="ShipAddress" class="form-control" disabled=true/>
                 </div>
 
             </div>
@@ -67,8 +44,7 @@
                     <label asp-for="ShipEmail"></label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="ShipEmail" class="form-control" />
-                    <span asp-validation-for="ShipEmail" class="text-danger"></span>
+                    <input asp-for="ShipEmail" class="form-control" disabled=true/>
                 </div>
             </div>
             <div class="form-group row product-item">
@@ -76,10 +52,7 @@
                     <label asp-for="PaymentMethod"></label>
                 </div>
                 <div class="col-9">
-                    <select asp-for="PaymentMethod" class="form-control" asp-items="Html.GetEnumSelectList<PaymentMethod>()">
-                        <option>Select type ...</option>
-                    </select>
-                    <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                    <input asp-for="PaymentMethod" class="form-control" disabled=true />
                 </div>
             </div>
         </div>
@@ -95,29 +68,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in products)
+                    @foreach (var item in @Model.OrderDetails)
                     {
                         <tr class="body-tr-table">
                             <td>
-                                <img src="~/@item.Image" height="100px" width="150px" />
+                                <img src="~/@item.Product.Image" height="100px" width="150px" />
                             </td>
-                            <td>@item.Name</td>
-                            <td>@item.Price</td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Price</td>
                         </tr>
                     }
                 </tbody>
             </table>
             <div class="text-right">
-                <h3>Total Price : @products.Sum(c=>c.Price)</h3>
+                <h3>Total Price : @Model.Total</h3>
             </div>
             <div class="form-group text-right">
-                <input type="submit" value="Place Order" class="btn btn-success" />
+                <a class="btn btn-primary" asp-controller="History" asp-action="HistoryOrders">Back</a>
             </div>
         </div>
 
 
     </div>
-</form>
 @section Scripts{
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

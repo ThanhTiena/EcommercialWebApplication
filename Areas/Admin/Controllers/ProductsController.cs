@@ -88,7 +88,6 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
                     var name = Path.Combine(_he.WebRootPath + "/images", Path.GetFileName(image.FileName));
                     await image.CopyToAsync(new FileStream(name, FileMode.Create));
                     product.Image = "images/" + image.FileName;
-
                 }
                 else
                 {

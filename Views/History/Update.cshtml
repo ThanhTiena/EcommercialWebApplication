@@ -1,0 +1,116 @@
+﻿@using EcommercialWebApplication.Utility
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity;
+@model EcommercialWebApplication.Models.Order
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Update Status Order</h1>
+<br />
+<h2 class="text-info">Order Details</h2>
+<div class="p-4 rounded border row">
+    <div class="col-6">
+        <div class="form-group row product-item">
+            <div class="col-3 form-label">
+                <label asp-for="ShipName"></label>
+            </div>
+            <div class="col-9">
+                <input asp-for="ShipName" class="form-control" disabled=true />
+                <span asp-validation-for="ShipName" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="form-group row product-item">
+            <div class="col-3 form-label">
+                <label asp-for="ShipPhoneNumber"></label>
+            </div>
+            <div class="col-9">
+                <input asp-for="ShipPhoneNumber" class="form-control" disabled=true />
+                <span asp-validation-for="ShipPhoneNumber" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="form-group row product-item">
+            <div class="col-3 form-label">
+                <label asp-for="ShipAddress"></label>
+            </div>
+            <div class="col-9">
+                <input asp-for="ShipAddress" class="form-control" disabled=true />
+                <span asp-validation-for="ShipAddress" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="form-group row product-item">
+            <div class="col-3 form-label">
+                <label asp-for="ShipEmail"></label>
+            </div>
+            <div class="col-9">
+                <input asp-for="ShipEmail" class="form-control" disabled=true />
+                <span asp-validation-for="ShipEmail" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row product-item">
+            <div class="col-3 form-label">
+                <label asp-for="PaymentMethod"></label>
+            </div>
+            <div class="col-9">
+                <input asp-for="PaymentMethod" class="form-control" disabled=true />
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+        </div>
+        <form asp-action="Update" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" value="" />
+            <div class="form-group row product-item">
+                <div class="col-3 form-label">
+                    <label asp-for="Status"></label>
+                </div>
+                <div class="col-9">
+                    <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<OrderStatus>()">
+                        <option>Select type ...</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group text-right">
+                <input type="submit" value="Update" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-6">
+        <h4 style="color: orangered;">Cart Products</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="head-tr-table">
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in   @Model.OrderDetails)
+                {
+                    <tr class="body-tr-table">
+                        <td>
+                            <img src="~/@item.Product.Image" height="100px" width="150px" />
+                        </td>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Product.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h3>Total Price : @Model.Total</h3>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
