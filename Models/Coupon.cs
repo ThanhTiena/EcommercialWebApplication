@@ -17,11 +17,12 @@ namespace EcommercialWebApplication.Models
 
         [Display(Name = "Description")]
         public string Description { get; set; }
-        public Type? Type { get; set; }
+        public int UserId { get; set; }
+        public CouponType? Type { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 
-    public enum Type
+    public enum CouponType
     {
         General,
         Specific,

@@ -38,7 +38,7 @@ namespace Controllers
                     order.ShipEmail = profile.EmailAddress;
                 }
             }
-
+            ViewBag.Coupon = await _context.Coupons.ToListAsync();
             return View(order);
         }
         [HttpPost]

@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EcommercialWebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles ="Admin")]
     public class CouponsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -47,6 +49,7 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
         // GET: Admin/Coupons/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -55,7 +58,7 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Code,Count,Discount,EndDate,Description")] Coupon coupon)
+        public async Task<IActionResult> Create([Bind("Id,Code,Count,Discount,EndDate,Description,Type")] Coupon coupon)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +90,7 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Count,Discount,EndDate,Description")] Coupon coupon)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Count,Discount,EndDate,Description,Type")] Coupon coupon)
         {
             if (id != coupon.Id)
             {
