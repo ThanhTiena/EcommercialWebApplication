@@ -22,8 +22,29 @@ namespace EcommercialWebApplication.Controllers
             _signInManager = signinManager;
             _userManager = userManager;
         }
-        public IActionResult Profile()
+     /*   public IActionResult Profile()
         {
+            return View();
+        }*/
+
+        public async Task<IActionResult> Profile()
+        {
+            var isSignIn = _signInManager.IsSignedIn(User);
+            if (isSignIn)
+            {
+                var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                var userId = currentUser.Id;
+                if (userId != 0)
+                {
+                    var user = await _context.Customers.Include(c => c.Profile)
+                                                        .AsNoTracking()
+                                                        .FirstOrDefaultAsync(c => c.Id == userId);
+                    if (user != null)
+                    {
+                        return View(user.Profile);
+                    }
+                }
+            }
             return View();
         }
 

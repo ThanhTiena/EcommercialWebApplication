@@ -275,6 +275,7 @@ footer {
     width: fit-content;
     padding: 5px;
     animation: slide 1s ease-in-out;
+    width: 100%;
 }
 
 a{
@@ -283,8 +284,7 @@ a{
 }
 
 .profile-main-log {
-  
-    width: 150px;
+
     padding: 5px 10px 5px 10px;
 }
 
@@ -311,4 +311,8 @@ a{
     to {
         height: 0;
     }
+}
+
+main{
+    min-height: 80vh;
 }
