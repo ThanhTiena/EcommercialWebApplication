@@ -16,7 +16,7 @@ namespace EcommercialWebApplication.Models
         public bool RememberMe { get; set; }
         [EmailAddress]
 
-        [RegularExpression(@"^[a-z0-9]+@[a-z]+(\.[a-z]+)+$",
+        [RegularExpression(@"^[\w-\.]+@[a-z]+(\.[a-z]+)+$",
             ErrorMessage = "Email is not valid")]
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }

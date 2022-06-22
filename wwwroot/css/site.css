@@ -256,3 +256,59 @@ footer {
         opacity: 1;
     }
 }
+
+/*Profile*/
+.profile-nav {
+    padding-left: 20px;
+}
+
+.nav-div-none {
+    height: 0px;
+    overflow: hidden;
+    animation: hide 1s;
+    padding-left: 5px:;
+}
+
+.show {
+    display: block !important;
+    overflow: hidden;
+    width: fit-content;
+    padding: 5px;
+    animation: slide 1s ease-in-out;
+}
+
+a{
+    text-decoration: none!important;
+    color: #333!important;
+}
+
+.profile-main-log {
+  
+    width: 150px;
+    padding: 5px 10px 5px 10px;
+}
+
+    .profile-main-log ul {
+        margin: 0;
+        padding: 0;
+    }
+
+@keyframes slide {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 50px;
+    }
+}
+
+@keyframes hide {
+    from {
+        height: 50px;
+    }
+
+    to {
+        height: 0;
+    }
+}
