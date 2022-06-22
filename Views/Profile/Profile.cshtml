@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Customer> SignInManager
+@model EcommercialWebApplication.Models.Profile
 
 @{
     ViewData["Title"] = "Profile";
@@ -10,10 +11,22 @@
 <div>
     <hr />
     <div class="row">
+        <h4>@User.Identity?.Name</h4>
+    </div>
+    <div class="row">
         <div class="col-md-3">
             <ul class="nav nav-pills flex-column">
-                <li class="nav-item"><a class="nav-link" asp-controller="Profile" asp-action="ProfileDetail">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="History" asp-action="HistoryOrders">History Orders</a></li>
+                <li class="nav-item">
+                    <div class="profile-main-log">
+                        <ul type="none">
+                            <a href="#" class="nav-interact" onclick="navOpen()">Profile</a>
+                            <div class="nav-div-none">
+                                <li class="profile-nav"><a asp-controller="Profile" asp-action="ProfileDetail">My Profile</a></li>
+                                <li class="profile-nav"><a asp-controller="History" asp-action="HistoryOrders">My History</a></li>
+                            </div>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
                 </li>
@@ -23,4 +36,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    let listTitle = document.getElementsByClassName("profile-main-log")[0]
+    let childDiv = document.getElementsByClassName("nav-div-none")[0];
+    function navOpen() {
+        if (childDiv.classList.contains("show")) {
+            childDiv.classList.remove("show");
+            childDiv.classList.add("nav-div-none");
+        } else {
+            childDiv.classList.add("show");
+            childDiv.classList.remove("nav-div-none");
+        }
+
+    }
+</script>
 
