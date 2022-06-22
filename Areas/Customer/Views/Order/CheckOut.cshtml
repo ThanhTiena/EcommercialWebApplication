@@ -87,7 +87,7 @@
                     <label asp-for="CouponId"></label>
                 </div>
                 <div class="col-9">
-                    <select asp-for="CouponId" class="form-control" asp-items="@ViewBag.Coupon">
+                    <select asp-for="CouponId" class="form-control" asp-items="ViewBag.Coupon">
                         <option>Select Coupon...</option>
                     </select>
                     <span asp-validation-for="CouponId" class="text-danger"></span>

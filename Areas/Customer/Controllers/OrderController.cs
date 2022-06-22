@@ -4,6 +4,7 @@ using EcommercialWebApplication.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Controllers
@@ -38,13 +39,16 @@ namespace Controllers
                     order.ShipEmail = profile.EmailAddress;
                 }
             }
-            ViewBag.Coupon = await _context.Coupons.ToListAsync();
+ 
+            ViewData["Coupon"] = new SelectList(_context.Coupons.Where(m => m.Type.Equals(CouponType.General)
+                                                                      &&  m.EndDate >= DateTime.Today
+                                                                      && m.Count > 0).ToList(),"Id","Code", null);
             return View(order);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> CheckOut([Bind("ShipName,ShipAddress,ShipPhoneNumber,ShipPhoneName,ShipEmail,PaymentMethod")] Order order)
+        public async Task<IActionResult> CheckOut([Bind("ShipName,ShipAddress,ShipPhoneNumber,ShipPhoneName,ShipEmail,CouponId,PaymentMethod")] Order order)
         {
             decimal total = 0;
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
@@ -73,11 +77,24 @@ namespace Controllers
             }
             if (_signInManager.IsSignedIn(User))
             {
+                if(order.CouponId == 0)
+                {
+                    return RedirectToAction(nameof(CheckOut));
+                }
+
+                var coupon = await _context.Coupons
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(m => m.Id == order.CouponId);
+                coupon.Count -= 1;
+                _context.Update(coupon);
+                _context.SaveChanges();
+
                 var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 order.UserId = currentUser.Id;
                 order.OrderDate = DateTime.Now;
                 order.Status = OrderStatus.InProgress;
-                order.Total = total;
+                order.Total = total - (total*coupon.Discount)/100;
+
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
                 HttpContext.Session.Set("products", new List<Product>());

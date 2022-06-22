@@ -22,9 +22,11 @@ namespace EcommercialWebApplication.Controllers
             _context = context;
 
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = _context.Products.Include(c => c.Category).ToList();
+            var products = new List<Product>();
+
+            products = await _context.Products.Include(c => c.Category).ToListAsync();
             ViewBag.Categories = _context.Categories.ToList();
             return View(products);
         }
@@ -141,6 +143,7 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddQuantity(OrderDetail orderDetail)
         {
             IDictionary<int, int> orderDetails = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");
@@ -160,6 +163,8 @@ namespace EcommercialWebApplication.Controllers
             return RedirectToAction(nameof(Cart));
         }
 
+
+
         public IActionResult Privacy()
         {
             return View();
@@ -170,5 +175,6 @@ namespace EcommercialWebApplication.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

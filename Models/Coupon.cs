@@ -8,6 +8,8 @@ namespace EcommercialWebApplication.Models
         [Required]
         public string Code { get; set; }
         public int Count { get; set; }
+
+        [Range(1.00, 100.00, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public decimal Discount { get; set; }
 
         [DataType(DataType.Date)]
@@ -24,8 +26,6 @@ namespace EcommercialWebApplication.Models
 
     public enum CouponType
     {
-        General,
-        Specific,
-        Special
+        General
     }
 }

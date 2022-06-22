@@ -127,6 +127,7 @@ namespace EcommercialWebApplication.Controllers
         }
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(Account account)
         {
             if (_signInManager.IsSignedIn(User))
@@ -157,6 +158,7 @@ namespace EcommercialWebApplication.Controllers
             return View(profile);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CustomerInformation([Bind("FirstName,LastName,Dob,Address,Nationality")] Profile profile)
         {
             if (ModelState.IsValid)

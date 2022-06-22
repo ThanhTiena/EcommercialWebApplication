@@ -49,7 +49,6 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
         // GET: Admin/Coupons/Create
         public IActionResult Create()
         {
-
             return View();
         }
 
