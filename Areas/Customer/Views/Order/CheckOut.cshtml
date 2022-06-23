@@ -79,7 +79,7 @@
                     <select asp-for="PaymentMethod" class="form-control" asp-items="Html.GetEnumSelectList<PaymentMethod>()">
                         <option>Select type ...</option>
                     </select>
-                    <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                    <span class="alert-danger">@ViewData["Error"]</span>
                 </div>
             </div>
             <div class="form-group row product-item">
@@ -90,7 +90,6 @@
                     <select asp-for="CouponId" class="form-control" asp-items="ViewBag.Coupon">
                         <option>Select Coupon...</option>
                     </select>
-                    <span asp-validation-for="CouponId" class="text-danger"></span>
                 </div>
             </div>
         </div>
