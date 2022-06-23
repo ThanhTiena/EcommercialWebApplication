@@ -56,6 +56,7 @@ namespace EcommercialWebApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Detail")]
         [ValidateAntiForgeryToken]
         public ActionResult ProductDetail(int? id)
