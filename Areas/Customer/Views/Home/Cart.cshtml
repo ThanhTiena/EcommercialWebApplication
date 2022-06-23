@@ -43,7 +43,7 @@
                     </td>
                     <td>@item.Name</td>
                     <td>@item.Price</td>
-                    <td>
+                    <td class="quantiy-update">
                         <form method="post">
                             <input asp-for="ProductId" value=@item.Id type="hidden" />
                             <input asp-for="quantity" value=@orderDetails[@item.Id] max="@item.Stock" min=1 onkeydown="false"/>
