@@ -77,7 +77,7 @@ namespace EcommercialWebApplication.Controllers
             {
                 var _user = await _userManager.FindByNameAsync(registerModel.UserName);
                 HttpContext.Session.Set("USERID", _user.Id);
-                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userManager.AddToRoleAsync(user, "Customer");
             }
             else
             {
@@ -120,6 +120,19 @@ namespace EcommercialWebApplication.Controllers
             ViewData["Error"] = "Email Invalid";
             return View();
         }
+
+        [HttpGet]
+        public IActionResult RecoverPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RecoverPassword(Account account)
+        {
+            
+            return View();
+        }
+
         [HttpGet]
         public IActionResult ChangePassword()
         {
