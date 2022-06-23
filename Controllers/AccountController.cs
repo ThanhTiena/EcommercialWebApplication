@@ -98,7 +98,7 @@ namespace EcommercialWebApplication.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -110,6 +110,7 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(Account account)
         {
             var result = await _userManager.FindByEmailAsync(account.Email);
@@ -117,7 +118,7 @@ namespace EcommercialWebApplication.Controllers
             {
                 return RedirectToAction(nameof(ChangePassword), account);
             }
-            ViewData["Error"] = "Email Invalid";
+            ViewData["Error"] = "Email Has Not Existed";
             return View();
         }
 
@@ -127,9 +128,10 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RecoverPassword(Account account)
         {
-            
+            // in to-do
             return View();
         }
 

@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Statistic";
+}
+@{
+    var data = ViewBag.Data;
+}
+
+<div class="text-center">
+    <h4 class="display-4">Customer Order Income Last 7 Days</h4>
+    <div class="card">
+        <div class="card-header">
+            <div class="chart">
+                <canvas id="barchart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+    var barCanvas = document.getElementById("barchart");
+    var Income = [];
+    var DateSales = [];
+    @if(data.Count>0)
+    {
+        var index = 1;
+        foreach(var key in data.Keys)
+        {
+            @:Income.push(@data[key]);
+            @:DateSales.push("Day "+@index);
+            index++;
+        }
+    }
+    var Income = {
+        label: 'Income',
+        data: Income,
+        backgroundColor: 'rgb(152, 29, 130)',
+        borderWidth: 0,
+        lineTension: 0,
+    };
+    var datasetvalues = {
+        labels: DateSales,
+        datasets: [Income]
+    };
+    var chartOptions = {
+        scales: {
+            xAxes: [{
+                barPercentage: 1,
+                categoryPercentage: 0.6,
+            }],
+            yAxes: [{
+                barPercentage: 1,
+                categoryPercentage: 0.6,
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+        }
+    };
+    var barChart = new Chart(barCanvas, {
+        type: 'bar',
+        data: datasetvalues,
+        options: chartOptions
+    });
+</script>
