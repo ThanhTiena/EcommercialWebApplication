@@ -4,57 +4,57 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1 class="big-title">Create</h1>
 
-<h4>Product</h4>
+<h4 class="small-title">Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6 form-content-center">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" min=1/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="Stock" class="control-label"></label>
                 <input asp-for="Stock" class="form-control"  min=0/>
                 <span asp-validation-for="Stock" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="Image" class="control-label"></label>
                 <input asp-for="Image" class="form-control" type="file"/>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="Status" class="control-label"></label>
                 <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<ProductStatus>()">
                      <option>Select type ...</option>
                 </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group list-item">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check list-item">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
                 </label>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group list-item">
+                <input type="submit" value="Create" class="btn btn-info btn-edit" />
             </div>
             <h3>@ViewBag.message</h3>
         </form>
@@ -62,7 +62,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="category-link" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -7,29 +7,32 @@
 <h1 class="big-title">Category</h1>
 
 <p>
-    <a class="category-link" asp-action="Create">Create a new category</a>
+    <a class="link-custom" asp-action="Create">Create a new category</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                <a class="category-link" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="category-link" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a class="category-link" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div style="overflow-x:auto;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        <a class="category-link" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a class="category-link" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a class="category-link" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

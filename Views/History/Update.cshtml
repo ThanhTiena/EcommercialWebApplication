@@ -83,27 +83,29 @@
 
     <div class="col-6">
         <h4 style="color: orangered;">Cart Products</h4>
-        <table class="table table-bordered">
-            <thead>
-                <tr class="head-tr-table">
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in   @Model.OrderDetails)
-                {
-                    <tr class="body-tr-table">
-                        <td>
-                            <img src="~/@item.Product.Image" height="100px" width="150px" />
-                        </td>
-                        <td>@item.Product.Name</td>
-                        <td>@item.Product.Price</td>
+        <div style="overflow-x:auto;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="head-tr-table">
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in @Model.OrderDetails)
+                    {
+                        <tr class="body-tr-table">
+                            <td>
+                                <img src="~/@item.Product.Image" height="100px" width="150px" />
+                            </td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <div class="text-right">
             <h3>Total Price : @Model.Total</h3>
         </div>

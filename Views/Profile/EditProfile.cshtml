@@ -8,42 +8,42 @@
     <div class="row main-row">
         <div class="col-12">
             <form id="registerForm" method="post" asp-action="EditProfile">
-                <h2>Change Customer Information.</h2>
+                <h2 class="small-title">Change Customer Information.</h2>
                 <hr />
                 <span class="alert-danger">@ViewData["Error"]</span>
                 <input asp-for="@Model.CustomerId" type="hidden" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.FirstName" class="form-control" aria-required="true" />
                     <label asp-for="@Model.FirstName"></label>
                     <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.LastName" type="text" id="register-password" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="@Model.LastName"></label>
                     <span asp-validation-for="@Model.LastName" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.Dob" type="date" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="@Model.Dob"></label>
                     <span asp-validation-for="@Model.Dob" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.Address" type="text" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="@Model.Address"></label>
                     <span asp-validation-for="@Model.Address" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.PhoneNumber" type="text" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="@Model.PhoneNumber"></label>
                     <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.EmailAddress" type="text" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="@Model.EmailAddress"></label>
                     <span asp-validation-for="@Model.EmailAddress" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating form-item">
                     <input asp-for="@Model.Nationality" type="text" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="@Model.Nationality"></label>
                     <span asp-validation-for="@Model.Nationality" class="text-danger"></span>

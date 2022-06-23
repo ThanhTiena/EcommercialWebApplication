@@ -28,7 +28,7 @@
     <div class="p-4 rounded border row">
         <div asp-validation-summary="ModelOnly" class="text-danger">
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="form-group row product-item">
                 <div class="col-3 form-label">
                     <label asp-for="ShipName"></label>
@@ -95,34 +95,36 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <h4 style="color: orangered;">Cart Products</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <tr class="head-tr-table">
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in products)
-                    {
-                        <tr class="body-tr-table">
-                            <td>
-                                <img src="~/@item.Image" height="100px" width="150px" />
-                            </td>
-                            <td>@item.Name</td>
-                            <td>@item.Price</td>
+            <div style="overflow-x:auto;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="head-tr-table">
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in products)
+                        {
+                            <tr class="body-tr-table">
+                                <td>
+                                    <img src="~/@item.Image" height="100px" width="150px" />
+                                </td>
+                                <td>@item.Name</td>
+                                <td>@item.Price</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
             <div class="text-right">
                 <h3>Total Price : @products.Sum(c=>c.Price)</h3>
             </div>
             <div class="form-group text-right">
-                <input type="submit" value="Place Order" class="btn btn-success" />
+                <input type="submit" value="Place Order" class="btn btn-success btn-order" />
             </div>
         </div>
 
