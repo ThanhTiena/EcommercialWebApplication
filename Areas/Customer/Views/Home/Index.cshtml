@@ -36,9 +36,9 @@
         @foreach (var category in ViewBag.Categories)
         {
             <div class="col-md-2 col-6">
-                <div class="card">
+                <div class="card" >
                     <div class="card-body category_card">
-                        <h5 class="card-title text-center">@category.CategoryName</h5>
+                        <a asp-action="SearchByCategory" asp-route-id="@category.Id" class="card-title text-center">@category.CategoryName</a>
                     </div>
                 </div>
             </div>

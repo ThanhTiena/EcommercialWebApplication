@@ -30,6 +30,14 @@ namespace EcommercialWebApplication.Controllers
             ViewBag.Categories = _context.Categories.ToList();
             return View(products);
         }
+        public async Task<IActionResult> SearchByCategory(int? id)
+        {
+            var products = new List<Product>();
+
+            products = await _context.Products.Include(c => c.Category).Where(m => m.Category.Id==id).ToListAsync();
+            ViewBag.Categories = _context.Categories.ToList();
+            return View("Index",products);
+        }
 
         public ActionResult Detail(int? id)
         {

@@ -54,7 +54,7 @@ namespace EcommercialWebApplication.Controllers
                 }
                 var order = await _context.Orders.Include(m => m.OrderDetails)
                                                     .ThenInclude(m => m.Product)
-                                                    .FirstOrDefaultAsync(m => m.Id == currentUser.Id);
+                                                    .FirstOrDefaultAsync(m => m.Id == id && m.UserId == currentUser.Id);
                 if (order == null)
                 {
                     return NotFound();
