@@ -15,12 +15,12 @@
              <div class="profile-picture">
                 <img src="~/images/profile.png" />
             </div>
-            <h4 class="user-name">@User.Identity?.Name</h4>
+            <h4 class="user-name">User: @User.Identity?.Name</h4>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
                     <div class="profile-main-log">
                         <ul type="none">
-                            <a href="#" class="nav-interact" onclick="navOpen()">Profile</a>
+                            <a class="btn btn-info position-relative" href="#" class="nav-interact" onclick="navOpen()">Profile</a>
                             <div class="nav-div-none">
                                 <li class="profile-nav"><a asp-controller="Profile" asp-action="ProfileDetail" style="color:blue!important">My Profile</a></li>
                                 <li class="profile-nav"><a asp-controller="History" asp-action="HistoryOrders">My History</a></li>

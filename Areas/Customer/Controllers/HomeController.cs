@@ -57,9 +57,7 @@ namespace EcommercialWebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ActionName("Detail")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ProductDetail(int? id)
+        [ActionName("Detail")]        public ActionResult ProductDetail(int? id)
         {
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
             IDictionary<int, int> cartQuantities = HttpContext.Session.Get<IDictionary<int, int>>("Quantities");

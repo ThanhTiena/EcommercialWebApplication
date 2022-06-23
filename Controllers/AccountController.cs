@@ -116,7 +116,7 @@ namespace EcommercialWebApplication.Controllers
             var result = await _userManager.FindByEmailAsync(account.Email);
             if (result != null)
             {
-                return RedirectToAction(nameof(ChangePassword), account);
+                return RedirectToAction(nameof(RecoverPassword), account);
             }
             ViewData["Error"] = "Email Has Not Existed";
             return View();

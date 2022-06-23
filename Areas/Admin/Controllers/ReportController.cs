@@ -20,8 +20,9 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
         public async Task<IActionResult> Statistic()
         {
             IDictionary<String, decimal> data = new Dictionary<String, decimal>();
-            var orders = await _context.Orders.OrderByDescending(d => d.OrderDate).Take(7).ToListAsync();
+            var orders = await _context.Orders.OrderByDescending(d => d.OrderDate).ToListAsync();
             orders.Reverse();
+            var loadsize = 7;
             foreach (var order in orders)
             {
                 if (!data.ContainsKey(DateOnly.FromDateTime(order.OrderDate).ToString()))
@@ -32,6 +33,7 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
                 {
                     data[DateOnly.FromDateTime(order.OrderDate).ToString()] += order.Total;
                 }
+                if(data.Count == 7) { break; }
             }
             ViewBag.Data = data;
             return View();
