@@ -39,10 +39,10 @@ namespace Controllers
                     order.ShipEmail = profile.EmailAddress;
                 }
             }
- 
+
             ViewData["Coupon"] = new SelectList(_context.Coupons.Where(m => m.Type.Equals(CouponType.General)
-                                                                      &&  m.EndDate >= DateTime.Today
-                                                                      && m.Count > 0).ToList(),"Id","Code", null);
+                                                                      && m.EndDate >= DateTime.Today
+                                                                      && m.Count > 0).ToList(), "Id", "Code", null);
             return View(order);
         }
         [HttpPost]
@@ -77,23 +77,29 @@ namespace Controllers
             }
             if (_signInManager.IsSignedIn(User))
             {
-                if(order.CouponId == 0)
+                if (order.PaymentMethod == null)
                 {
-                    return RedirectToAction(nameof(CheckOut));
+                    ViewData["Error"] = "Please Choose Payment Method";
+                    return View();
                 }
-
-                var coupon = await _context.Coupons
+                if (order.CouponId != null)
+                {
+                    var coupon = await _context.Coupons
                                             .AsNoTracking()
                                             .FirstOrDefaultAsync(m => m.Id == order.CouponId);
-                coupon.Count -= 1;
-                _context.Update(coupon);
-                _context.SaveChanges();
-
+                    coupon.Count -= 1;
+                    _context.Update(coupon);
+                    _context.SaveChanges();
+                    order.Total = total - (total * coupon.Discount) / 100;
+                }
+                else
+                {
+                    order.Total = total;
+                }
                 var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
                 order.UserId = currentUser.Id;
                 order.OrderDate = DateTime.Now;
                 order.Status = OrderStatus.InProgress;
-                order.Total = total - (total*coupon.Discount)/100;
 
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
@@ -103,7 +109,7 @@ namespace Controllers
             else
             {
                 return RedirectToAction("Login", "Account");
-            } 
+            }
         }
     }
 }
