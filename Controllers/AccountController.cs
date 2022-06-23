@@ -99,6 +99,7 @@ namespace EcommercialWebApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -110,6 +111,7 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(Account account)
         {
             var result = await _userManager.FindByEmailAsync(account.Email);
@@ -127,6 +129,7 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RecoverPassword(Account account)
         {
             

@@ -56,6 +56,7 @@ namespace EcommercialWebApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Detail")]
         public ActionResult ProductDetail(int? id)
         {
@@ -87,6 +88,7 @@ namespace EcommercialWebApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Remove(int? id)
         {
             List<Product> list = HttpContext.Session.Get<List<Product>>("products");
