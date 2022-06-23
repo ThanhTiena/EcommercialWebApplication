@@ -133,7 +133,7 @@ body {
 }
 
 /*Css Register*/
-#register-title {
+.register-title {
     text-align: center !important;
 }
 
@@ -151,7 +151,13 @@ body {
 }
 
     .main-row form > div {
-        margin: 5px 0 5px 0 !important;
+        margin: 15px 0 15px 0 !important;
+    }
+
+    .main-row button {
+        margin-top: 50px;
+  
+  
     }
 
 
@@ -262,6 +268,18 @@ footer {
     padding-left: 20px;
 }
 
+.profile-picture{
+    margin-bottom: 5% !important;
+    max-width: 40%;
+    margin:auto;
+
+}
+
+.profile-picture img{
+    width: 100%;
+    border-radius: 50%;
+}
+
 .nav-div-none {
     height: 0px;
     overflow: hidden;
@@ -316,3 +334,12 @@ a{
 main{
     min-height: 80vh;
 }
+
+dt, dd{
+    font-size: 20px;
+}
+
+a.btn-info, .profile-main-log a{
+    font-size:16px;
+}
+

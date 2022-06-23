@@ -23,11 +23,13 @@
 
 <div>
     <hr />
+    
     <div class="row">
-        <h4>@User.Identity?.Name</h4>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-5">
+             <div class="profile-picture">
+                <img src="~/images/profile.png" />
+            </div>
+            <h4 style="text-align:center">@User.Identity?.Name</h4>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
                     <div class="profile-main-log">
@@ -45,7 +47,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>History Orders</h4>
             <hr />
             <table class="table">
