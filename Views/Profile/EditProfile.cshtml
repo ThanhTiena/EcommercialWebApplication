@@ -8,7 +8,7 @@
     <div class="row main-row">
         <div class="col-12">
             <form id="registerForm" method="post" asp-action="EditProfile">
-                <h2 class="small-title">Change Customer Information.</h2>
+                <h2 class="small-title">Change Customer Information</h2>
                 <hr />
                 <span class="alert-danger">@ViewData["Error"]</span>
                 <input asp-for="@Model.CustomerId" type="hidden" />
@@ -48,7 +48,7 @@
                     <label asp-for="@Model.Nationality"></label>
                     <span asp-validation-for="@Model.Nationality" class="text-danger"></span>
                 </div>
-                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-info">Confirm</button>
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-info btn-confirm">Confirm</button>
             </form>
         </div>
     </div>

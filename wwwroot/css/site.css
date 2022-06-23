@@ -165,37 +165,6 @@ footer {
     background-color: #ccc;
 }
 
-
-@media only screen and (max-width: 740px) {
-    html {
-        font-size: 16px;
-    }
-
-    .navbar-toggler {
-        margin-left: 40vw;
-    }
-    .nav-item {
-        text-align: center !important;
-    }
-    .footer-detail {
-        height: 350px;
-    }
-    .btn-group {
-        margin-left: 50%;
-    }
-    .form-control-button {
-        width: 120px !important;
-        margin-left: 0%;
-    }
-    .form-group .btn-success {
-        margin-top: 20px !important;
-        margin-left:35%;
-    }
-    .product-img{
-        margin-left: -20px;
-    }
-}
-
 /*Chat css*/
 .chatbox {
     position: fixed;
@@ -274,9 +243,11 @@ footer {
     margin:auto;
 
 }
-
+.user-name {
+    margin-left: 32%;
+}
 .profile-picture img{
-    width: 100%;
+    width: 60%;
     border-radius: 50%;
 }
 
@@ -330,7 +301,212 @@ a{
         height: 0;
     }
 }
+.big-title {
+    color:deepskyblue;
+}
+.small-title {
+    color: brown;
+}
+.category-link:hover {
+    color: sandybrown !important;
+}
+.link-custom {
+    font-size: 16px;
+}
+.notify-delete {
+    color: red;
+}
+.notify-message {
+    margin-left: 25%;
+    color: red;
+}
+.link-custom:hover {
+    color: sandybrown !important;
+}
+.delete-content {
+    margin-left: 30px;
+}
+.nav-link:hover {
+    color: sandybrown !important;
+}
+main {
+    min-height: 60vh;
+}
+.list-item label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.btn-create {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 35%;
+}
+.form-content-center {
+    margin-left: 25%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.catetory-label {
+    margin-top: 15px !important;
+}
+.text-center {
+    text-align: center !important;
+}
+.text-center-cus {
+    line-height: 100px !important;
+}
+.table-title-center th {
+    text-align: center;
+}
+.table-product-center td {
+    text-align: center;
+}
+.btn-edit {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 40%;
+}
+.list-item-btn {
+    margin-top: 10px;
+}
+.form-check-label{
+    margin-top: 10px;
+}
+.list-item input {
+    margin-bottom: 5px;
+}
+.form-content-center dl dt {
+    font-size: 16px;
+}
+.form-content-center dl dd {
+    font-size: 16px;
+}
+.profile-content-center dl dt {
+    font-size: 16px;
+}
 
-main{
-    min-height: 80vh;
+.profile-content-center dl dd {
+    font-size: 16px;
+}
+.btn-edit-customer {
+    margin-top: 20px;
+    width: 100px;
+    margin-left: 25%;
+}
+.form-item label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.btn-confirm {
+    margin-top: 20px !important;
+}
+.register-title {
+    color: deepskyblue !important;
+}
+.login-form-item {
+    margin-top: 15px;
+}
+.login-form-item label{
+    font-weight: bold;
+}
+    .checkbox {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+
+@media only screen and (max-width: 740px) {
+    html {
+        font-size: 16px;
+    }
+
+    .navbar-toggler {
+        margin-left: 40vw;
+    }
+
+    .nav-item {
+        text-align: center !important;
+    }
+
+    .footer-detail {
+        height: 350px;
+    }
+
+    .btn-group {
+        margin-left: 50%;
+    }
+
+    .form-control-button {
+        width: 120px !important;
+        margin-left: 0%;
+    }
+
+    .form-group .btn-success {
+        margin-top: 20px !important;
+        margin-left: 35%;
+    }
+
+    .product-img {
+        margin-left: -20px;
+    }
+    .quantiy-update {
+        width: 80px;
+    }
+    .money-static h3 {
+        font-size: 20px !important;
+        margin-left: -90px !important;
+    }
+    .btn-process {
+        font-size: 16px !important;
+        width: 120px;
+        margin-left: -90px !important;
+    }
+    .text-right h3 {
+        font-size: 20px !important;
+        margin-left: -100px !important;
+    }
+    .btn-order {
+        font-size: 16px !important;
+        width: 120px;
+        margin-left: -90px !important;
+    }
+    .btn-create {
+        margin-bottom: 20px;
+    }
+    .form-content-center {
+        margin-left: 0px !important;
+    }
+    .profile-content-center {
+        margin-left: 0px !important;
+    }
+    .btn-edit {
+        margin-left: 35%;
+    }
+    .notify-message{
+        margin-left: 0px;
+    }
+    .delete-content {
+        margin-left: 30%;
+    }
+    .small-title {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .big-title {
+        text-align: center;
+    }
+    .user-name {
+        margin-left: 35%;
+    }
+
+    .profile-picture img {
+        width: 100%;
+        border-radius: 50%;
+    }
+    .btn-edit-customer {
+        margin-left: 35%;
+    }
+    .btn-confirm {
+        font-size: 16px !important;
+    }
 }
