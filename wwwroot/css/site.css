@@ -314,5 +314,24 @@ a{
 }
 
 main{
-    min-height: 80vh;
+    min-height: 60vh;
+}
+
+/*admin-category css*/
+.big-title {
+    color: deepskyblue;
+}
+.category-link:hover {
+    color: sandybrown !important;
+}
+.small-title {
+    color:brown;
+}
+.btn-create {
+    margin-left: 40%;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.notify-delete {
+    color: red;
 }
