@@ -77,7 +77,7 @@ namespace EcommercialWebApplication.Controllers
             {
                 var _user = await _userManager.FindByNameAsync(registerModel.UserName);
                 HttpContext.Session.Set("USERID", _user.Id);
-                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userManager.AddToRoleAsync(user, "Customer");
             }
             else
             {
@@ -110,6 +110,7 @@ namespace EcommercialWebApplication.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(Account account)
         {
             var result = await _userManager.FindByEmailAsync(account.Email);
@@ -117,9 +118,23 @@ namespace EcommercialWebApplication.Controllers
             {
                 return RedirectToAction(nameof(ChangePassword), account);
             }
-            ViewData["Error"] = "Email Invalid";
+            ViewData["Error"] = "Email Has Not Existed";
             return View();
         }
+
+        [HttpGet]
+        public IActionResult RecoverPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RecoverPassword(Account account)
+        {
+            // in to-do
+            return View();
+        }
+
         [HttpGet]
         public IActionResult ChangePassword()
         {

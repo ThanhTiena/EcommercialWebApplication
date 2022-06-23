@@ -88,6 +88,7 @@ namespace EcommercialWebApplication.Controllers
             return NotFound();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile([Bind("CustomerId,FirstName,LastName,Dob,Address,PhoneNumber,EmailAddress,Nationality")] Profile profile)
         {
             if (ModelState.IsValid)

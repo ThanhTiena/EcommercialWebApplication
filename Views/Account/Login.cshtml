@@ -38,14 +38,13 @@
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-info">Log in</button>
                 </div>
                 <div>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <p>
-                            <a id="forgot-password" class="category-link" asp-action="ForgotPassword">Forgot your password?</a>
-                        </p>
-                    }
-                    <p style="text-align: center">
+
+                    <p style="text-align: center; margin-top: 10px">
                         <a class="category-link" asp-controller="Account" asp-action="Register">Register as a new user</a>
+                    </p>
+                    <hr />
+                    <p style="text-align: center">
+                        <a id="forgot-password" class="category-link" asp-action="ForgotPassword">Forgot your password?</a>
                     </p>
                 </div>
             </form>
