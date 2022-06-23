@@ -5,12 +5,15 @@
 @{
     var isSign = false;
     var roles = new string[1];
+
     if (SignInManager.IsSignedIn(User))
     {
         isSign = true;
         var currentUser = UserManager.FindByNameAsync(User.Identity.Name).Result;
         roles = UserManager.GetRolesAsync(currentUser).Result.ToArray();
     }
+
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +46,7 @@
                                 Home
                             </a>
                         </li>
-                        
+
                         @if (roles.Contains("Admin") && isSign)
                         {
                             <li class="nav-item">
@@ -60,7 +63,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">
                                 Roles
                             </a>
-                        </li>          
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

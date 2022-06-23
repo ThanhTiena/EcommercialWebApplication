@@ -11,10 +11,11 @@
 <div>
     <hr />
     <div class="row">
-        <h4>@User.Identity?.Name</h4>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-5">
+            <div class="profile-picture">
+                <img src="~/images/profile.png" />
+            </div>
+            <h4 style="text-align:center">@User.Identity?.Name</h4>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
                     <div class="profile-main-log">
@@ -32,50 +33,50 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>My Profile</h4>
             <hr />
             <dl class="row">
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.FirstName)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.FirstName)
                 </dd>
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.LastName)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.LastName)
                 </dd>
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.Dob)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.Dob)
                 </dd>
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.Address)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.Address)
                 </dd>
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.EmailAddress)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.EmailAddress)
                 </dd>
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.Nationality)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.Nationality)
                 </dd>
-                <dt class = "col-sm-2">
+                <dt class = "col-4">
                     @Html.DisplayNameFor(model => model.PhoneNumber)
                 </dt>
-                <dd class = "col-sm-10">
+                <dd class = "col-8">
                     @Html.DisplayFor(model => model.PhoneNumber)
                 </dd>
                 <div>
