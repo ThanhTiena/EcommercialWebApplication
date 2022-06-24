@@ -300,9 +300,18 @@ a{
     to {
         height: 0;
     }
+}   
+.category_card {
+    padding: 0px !important;
+    text-align:center;
+    font-weight: bold;
+}
+.category_card a {
+    line-height: 40px;
+    display: block;
 }
 .big-title {
-    color:deepskyblue;
+    color: deepskyblue;
 }
 .small-title {
     color: brown;
