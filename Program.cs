@@ -1,5 +1,6 @@
 using EcommercialWebApplication.Data;
 using EcommercialWebApplication.Models;
+using EducationalManagement.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -59,7 +60,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
+    DbInitializer.Initialize(services);
+/*    UserInitializer.Initialize(services);*/
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
