@@ -116,7 +116,8 @@ namespace EcommercialWebApplication.Controllers
             var result = await _userManager.FindByEmailAsync(account.Email);
             if (result != null)
             {
-                return RedirectToAction(nameof(RecoverPassword), account);
+                HttpContext.Session.Set("Email", account.Email);
+                return RedirectToAction(nameof(RecoverPassword));
             }
             ViewData["Error"] = "Email Has Not Existed";
             return View();
@@ -129,9 +130,32 @@ namespace EcommercialWebApplication.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RecoverPassword(Account account)
+        public async Task<IActionResult> RecoverPassword([Bind("Password, ConfirmPassword")] Account model)
         {
-            // in to-do
+            if (model == null)
+            {
+                ViewData["Error"] = "Please Input Password";
+                return View();
+            }
+            if (model.Password.Equals(model.ConfirmPassword))
+            {
+
+
+                var email = HttpContext.Session.Get<String>("Email");
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var result = await _userManager.ResetPasswordAsync(user, code, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Login));
+                }
+            }
+            ViewData["Error"] = "Please Input The Same Password";
             return View();
         }
 
