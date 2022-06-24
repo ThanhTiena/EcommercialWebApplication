@@ -33,7 +33,7 @@ namespace EcommercialWebApplication.Areas.Admin.Controllers
                 {
                     data[DateOnly.FromDateTime(order.OrderDate).ToString()] += order.Total;
                 }
-                if(data.Count == 7) { break; }
+                if(data.Count == loadsize) { break; }
             }
             ViewBag.Data = data;
             return View();
