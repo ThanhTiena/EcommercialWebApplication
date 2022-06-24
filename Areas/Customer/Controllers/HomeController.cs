@@ -33,8 +33,15 @@ namespace EcommercialWebApplication.Controllers
         public async Task<IActionResult> SearchByCategory(int? id)
         {
             var products = new List<Product>();
+            if (id == null || id == 0)
+            {
+                products = await _context.Products.Include(c => c.Category).ToListAsync();
+            }
+            else
+            {
+                products = await _context.Products.Include(c => c.Category).Where(m => m.Category.Id == id).ToListAsync();
+            }
 
-            products = await _context.Products.Include(c => c.Category).Where(m => m.Category.Id==id).ToListAsync();
             ViewBag.Categories = _context.Categories.ToList();
             return View("Index",products);
         }
