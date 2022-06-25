@@ -406,6 +406,9 @@ main {
     font-weight: bold;
     margin-bottom: 10px;
 }
+.form-item input {
+    margin-bottom: 10px;
+}
 .btn-confirm {
     margin-top: 20px !important;
 }

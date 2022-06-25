@@ -28,7 +28,7 @@ namespace EcommercialWebApplication.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
-                
+
                 if (currentUser == null)
                 {
                     return NotFound();
@@ -42,7 +42,7 @@ namespace EcommercialWebApplication.Controllers
                 }
                 else
                 {
-                    listOrders = await _context.Orders.Where(m => m.UserId == currentUser.Id).ToListAsync(); 
+                    listOrders = await _context.Orders.Where(m => m.UserId == currentUser.Id).ToListAsync();
                 }
                 return View(listOrders);
             }
@@ -63,9 +63,21 @@ namespace EcommercialWebApplication.Controllers
                 {
                     return NotFound();
                 }
-                var order = await _context.Orders.Include(m => m.OrderDetails)
+                var roles = _userManager.GetRolesAsync(currentUser).Result.ToArray();
+                var order = new Order();
+                if (roles.Contains("Admin"))
+                {
+                    order = await _context.Orders.Include(m => m.OrderDetails)
                                                     .ThenInclude(m => m.Product)
-                                                    .FirstOrDefaultAsync(m => m.Id == id && m.UserId == currentUser.Id);
+                                                    .FirstOrDefaultAsync(m => m.Id == id);
+                }
+                else
+                {
+                    order = await _context.Orders.Include(m => m.OrderDetails)
+                                                       .ThenInclude(m => m.Product)
+                                                       .FirstOrDefaultAsync(m => m.Id == id && m.UserId == currentUser.Id);
+                }
+
                 if (order == null)
                 {
                     return NotFound();
@@ -73,7 +85,7 @@ namespace EcommercialWebApplication.Controllers
 
                 return View(order);
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -81,11 +93,11 @@ namespace EcommercialWebApplication.Controllers
         {
             return View(await _context.Orders.Include(m => m.OrderDetails)
                 .ThenInclude(m => m.Product)
-                .FirstOrDefaultAsync(m=> m.Id == id));
+                .FirstOrDefaultAsync(m => m.Id == id));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update([Bind("Id,Status")]Order order)
+        public async Task<IActionResult> Update([Bind("Id,Status")] Order order)
         {
             if (ModelState.IsValid)
             {

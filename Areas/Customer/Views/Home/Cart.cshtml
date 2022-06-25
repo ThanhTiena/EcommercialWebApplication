@@ -77,7 +77,7 @@
             }
             HttpcContextAccesstor.HttpContext.Session.Set("TotalPrice", total);
         }
-        <h3>Grant Total : @total </h3>
+        <h3>Grant Total : $@total </h3>
         <a asp-area="Customer" asp-action="Checkout" asp-controller="Order" class="btn btn-info btn-process">Process to Checkout</a>
     </div>
 </div>
