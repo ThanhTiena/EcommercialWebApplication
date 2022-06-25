@@ -28,11 +28,22 @@ namespace EcommercialWebApplication.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                
                 if (currentUser == null)
                 {
                     return NotFound();
                 }
-                var listOrders = await _context.Orders.Where(m=> m.UserId == currentUser.Id).ToListAsync();
+                var roles = _userManager.GetRolesAsync(currentUser).Result.ToArray();
+                var listOrders = new List<Order>();
+
+                if (roles.Contains("Admin"))
+                {
+                    listOrders = await _context.Orders.ToListAsync();
+                }
+                else
+                {
+                    listOrders = await _context.Orders.Where(m => m.UserId == currentUser.Id).ToListAsync(); 
+                }
                 return View(listOrders);
             }
             return RedirectToAction("Login", "Account");

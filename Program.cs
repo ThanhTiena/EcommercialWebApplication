@@ -64,8 +64,8 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    DbInitializer.Initialize(services);
-/*    UserInitializer.Initialize(services);*/
+/*    DbInitializer.Initialize(services);
+*//*    UserInitializer.Initialize(services);*/
 }
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

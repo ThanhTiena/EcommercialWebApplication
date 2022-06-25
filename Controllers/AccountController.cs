@@ -22,12 +22,12 @@ namespace EcommercialWebApplication.Controllers
             _context = context;
         }
 
-        /*public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             await _roleManager.CreateAsync(new IdentityRole<int>("Admin"));
             await _roleManager.CreateAsync(new IdentityRole<int>("Customer"));
             return View();
-        }*/
+        }
 
         [HttpGet]
         public IActionResult Login()
